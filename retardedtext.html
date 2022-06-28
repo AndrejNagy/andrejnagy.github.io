@@ -36,18 +36,18 @@
                 var number_of_same_changes = 1;
                 for (var i = 0; i < regular_value.length; i++){
                     if (number_of_same_changes >= 3){
-                        if (last_change){retarded_value = retarded_value + regular_value[i]; number_of_same_changes=1;}
+                        if (last_change){retarded_value = retarded_value + regular_value[i].toLowerCase(); number_of_same_changes=1;}
                         else {retarded_value = retarded_value + regular_value[i].toUpperCase(); number_of_same_changes=1;}
                     }
                     else {
                         if (Math.round(Math.random())){
                             if (last_change){number_of_same_changes++;} else {number_of_same_changes=1;}
-                            retarded_value = retarded_value + regular_value[i].toUpperCase()
+                            retarded_value = retarded_value + regular_value[i].toUpperCase();
                             last_change = true
                         }
                         else {
                             if (!last_change){number_of_same_changes++;} else {number_of_same_changes=1;}
-                            retarded_value = retarded_value + regular_value[i]
+                            retarded_value = retarded_value + regular_value[i].toLowerCase();
                             last_change = false
                         }
                     }
