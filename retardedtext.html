@@ -5,24 +5,24 @@
             jQuery(document).ready(function(){
                 var $textareas = jQuery('textarea');
 
-                // store init (default) state   
+                // store init (default) state
                 $textareas.data('x', $textareas.outerWidth());
-                $textareas.data('y', $textareas.outerHeight()); 
+                $textareas.data('y', $textareas.outerHeight());
 
-                $textareas.mouseup(function(){
+                $textareas.mousemove(function(){
                 var $this = jQuery(this);
 
-                if (  $this.outerWidth()  != $this.data('x') 
+                if (  $this.outerWidth()  != $this.data('x')
                     || $this.outerHeight() != $this.data('y') )
                 {
-                    // Resize Action Here  
+                    // Resize Action Here
                     $('textarea').height($this.outerHeight());
                     $('textarea').width($this.outerWidth());
                 }
 
                 // store new height/width
                 $this.data('x', $this.outerWidth());
-                $this.data('y', $this.outerHeight()); 
+                $this.data('y', $this.outerHeight());
                 });
 
             });
