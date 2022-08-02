@@ -20,11 +20,9 @@ jQuery(document).ready(function(){
     $this.data('x', $this.outerWidth());
     $this.data('y', $this.outerHeight());
     });
-    console.info($textareas.outerWidth());
     $('textarea').height(window.innerHeight/3);
     $('textarea').width(window.innerWidth-10);
     addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
-    console.info($textareas.outerWidth());
 });
 
 function copyToClipboard() {
