@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nagy</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="switch.css">
 </head>
 
 <body>
@@ -18,8 +19,16 @@
     </div>
     <div>
         <button style="margin: 5px;" class="btn btn-primary" onclick="copyToClipboard()">Copy to clipboard</button>
-        <div style="margin: 5px;"><input type="checkbox" id="case_change" name="case_change" checked><label for="case_change">Random case</label></div>
-        <div style="margin: 5px;"><input type="checkbox" id="wrong_y_i" name="wrong_y_i" checked><label for="wrong_y_i">Wrong y/i</label></div>
+        <div><label class="f">
+            <label class="switch">
+            <input id="case_change" name="case_change" type="checkbox">
+            <span class="slider round"></span>
+        </label>Random case</label></div>
+        <div><label class="f">
+            <label class="switch">
+            <input id="wrong_y_i" name="wrong_y_i" type="checkbox">
+            <span class="slider round"></span>
+        </label>Wrong y/i</label></div>
     </div>
 </body>
 
