@@ -20,8 +20,24 @@ jQuery(document).ready(function(){
     $this.data('x', $this.outerWidth());
     $this.data('y', $this.outerHeight());
     });
-
+    console.info($textareas.outerWidth());
+    $('textarea').height(window.innerHeight/3);
+    $('textarea').width(window.innerWidth*0.99);
+    console.info($textareas.outerWidth());
 });
+
+function copyToClipboard() {
+    /* Get the text field */
+    var copyText = document.getElementById("retarded_output");
+
+    /* Select the text field */
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+     /* Copy the text inside the text field */
+    navigator.clipboard.writeText(copyText.value);
+  }
+
 function generateRetardedText() {
     var iiiis = {
         'i': 'y',
