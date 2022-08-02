@@ -11,13 +11,12 @@
 <body>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="./retardedtext.js"></script>
-    <textarea style="resize:both;" type="text" id="retarded_input"></textarea><br />
+    <textarea style="resize:both;" onchange="generateRetardedText();" type="text" id="retarded_input"></textarea><br />
     <textarea style="resize:both;" readonly id="retarded_output"></textarea>
     <button onclick="copyToClipboard()">Copy to clipboard</button>
     <div><input type="checkbox" id="case_change" name="case_change" checked><label for="case_change">Random case</label>
     </div>
     <div><input type="checkbox" id="wrong_y_i" name="wrong_y_i" checked><label for="wrong_y_i">Wrong y/i</label></div>
-    <button onclick="generateRetardedText();" id="retarded_button">Generate retarded text</button><br />
 </body>
 
 </html>
