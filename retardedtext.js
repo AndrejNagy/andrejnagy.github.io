@@ -22,7 +22,8 @@ jQuery(document).ready(function(){
     });
     console.info($textareas.outerWidth());
     $('textarea').height(window.innerHeight/3);
-    $('textarea').width(window.innerWidth*0.99);
+    $('textarea').width(window.innerWidth-10);
+    addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
     console.info($textareas.outerWidth());
 });
 
