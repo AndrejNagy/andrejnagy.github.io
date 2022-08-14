@@ -72,3 +72,7 @@
     margin: auto;
     -webkit-tap-highlight-color: transparent;
   }
+
+  .non-editable {
+    background-color: rgb(134, 134, 134);
+  }

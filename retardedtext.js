@@ -23,6 +23,58 @@ jQuery(document).ready(function(){
     $('textarea').height(window.innerHeight/3);
     $('textarea').width(window.innerWidth-10);
     addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
+    // todo: everytime something changes, find all differences and apply them to other string
+    var last_change = true;
+    var number_of_same_changes = 1;
+    var retarded_value = "";
+    var retarded_input = document.getElementById("retarded_input")
+    var retarded_output = document.getElementById("retarded_output")
+    var iiiis = {
+        'i': 'y',
+        'y': 'i',
+        'I': 'Y',
+        'Y': 'I',
+    }
+    document.getElementById("retarded_input").addEventListener("keydown", (event) => {
+        if(event.which == 8){
+            retarded_output.value = retarded_output.value.substring(0, retarded_output.value.length - 1);
+        }
+    })
+    document.getElementById("retarded_input").addEventListener("keypress", (event) => {
+        // if (event.isComposing || event.keyCode === 229) {
+        //   return;
+        // }
+        var case_change = document.getElementById("case_change").checked
+        var wrong_y_i = document.getElementById("wrong_y_i").checked
+        var replacement_char = String.fromCharCode(event.which)
+        if (case_change){
+            if (number_of_same_changes >= 2){
+                if (last_change){replacement_char = replacement_char.toLowerCase(); number_of_same_changes=1;}
+                else {replacement_char = replacement_char.toUpperCase(); number_of_same_changes=1;}
+            }
+            else {
+                if (Math.round(Math.random())){
+                    if (last_change){number_of_same_changes++;} else {number_of_same_changes=1;}
+                    replacement_char = replacement_char.toUpperCase();
+                    last_change = true
+                }
+                else {
+                    if (!last_change){number_of_same_changes++;} else {number_of_same_changes=1;}
+                    replacement_char = replacement_char.toLowerCase();
+                    last_change = false
+                }
+            }
+        }
+        if (wrong_y_i){
+            if (['y', 'i', 'Y', 'I'].includes(replacement_char)){
+                replacement_char = iiiis[replacement_char];
+            }
+        }
+        if(retarded_input.value == ""){
+            retarded_output.value = "";
+        }
+        retarded_output.value += replacement_char;
+      });
 });
 
 function copyToClipboard() {
@@ -81,5 +133,5 @@ function generateRetardedText() {
             }
             retarded_value = retarded_value + replacement_char
         }
-    retarded_output.textContent = retarded_value
+    retarded_output.value = retarded_value
 }
