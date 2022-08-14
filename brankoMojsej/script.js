@@ -12,50 +12,49 @@ function keyPush(event){
 
 function putImageGround(){
     var img = new Image();
-    img.src = "./ground.png";  
-    debugger;
+    img.src = "ground.png";  
     ctx.drawImage(img, groundPosX, groundPosY, 1080, 50);            
 }
 
 function putImageTatraTea(x){
     var img = new Image();
-    img.src = "./tatraTea.png";  
+    img.src = "tatraTea.png";  
     ctx.drawImage(img, x, tatraTeaPosY, tatraTeaSizeX, tatraTeaSizeY);            
 }
 
 function putImageVodka(x){
     var img = new Image();
-    img.src = "./vodka.png";  
+    img.src = "vodka.png";  
     ctx.drawImage(img, x, vodkaPosY, vodkaSizeX, vodkaSizeY);            
 }
 
 function putImageFernet(x){
     var img = new Image();
-    img.src = "./fernet.png";  
+    img.src = "fernet.png";  
     ctx.drawImage(img, x, fernetPosY, fernetSizeX, fernetSizeY);            
 }
 
 function putImageBorovicka(x){
     var img = new Image();
-    img.src = "./borovicka.png";  
+    img.src = "borovicka.png";  
     ctx.drawImage(img, x, borovickaPosY, borovickaSizeX, borovickaSizeY);            
 }
 
 function putImageNapoje(x){
     var img = new Image();
-    img.src = "./napoje.png";  
+    img.src = "napoje.png";  
     ctx.drawImage(img, x, napojePosY, napojeSizeX, napojeSizeY);            
 }
 
 function putImageBranko(){
     var img = new Image();
-    img.src = "./branko.jpg"; 
+    img.src = "branko.jpg"; 
     ctx.drawImage(img, playerPosX, playerPosY, playerSizeX, playerSizeY);            
 }
 
 function putImageNorka(){
     var img = new Image();
-    img.src = "./norka.png";  
+    img.src = "norka.png";  
     ctx.drawImage(img, norkaPosX, norkaPosY, norkaSizeX, norkaSizeY);            
 }
 
