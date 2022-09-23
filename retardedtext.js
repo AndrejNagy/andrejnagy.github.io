@@ -1,30 +1,3 @@
-jQuery(document).ready(function(){
-    var $textareas = jQuery('textarea');
-
-    // store init (default) state
-    $textareas.data('x', $textareas.outerWidth());
-    $textareas.data('y', $textareas.outerHeight());
-
-    $textareas.mousemove(function(){
-    var $this = jQuery(this);
-
-    if (  $this.outerWidth()  != $this.data('x')
-        || $this.outerHeight() != $this.data('y') )
-    {
-        // Resize Action Here
-        $('textarea').height($this.outerHeight());
-        $('textarea').width($this.outerWidth());
-    }
-
-    // store new height/width
-    $this.data('x', $this.outerWidth());
-    $this.data('y', $this.outerHeight());
-    });
-    $('textarea').height(window.innerHeight/3);
-    $('textarea').width(window.innerWidth-10);
-    addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
-});
-
 function copyToClipboard() {
     /* Get the text field */
     var copyText = document.getElementById("retarded_output");
