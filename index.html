@@ -22,6 +22,9 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="retarded_text-tab" data-bs-toggle="tab" data-bs-target="#retarded_text" type="button" role="tab" aria-controls="retarded_text" aria-selected="false">Retarded text</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="dynmap-tab" data-bs-toggle="tab" data-bs-target="#dynmap" type="button" role="tab" aria-controls="dynmap" aria-selected="false">Dynmap</button>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
@@ -108,6 +111,12 @@
                         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5kun17TdcG6G76fye4jCYn?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
                     </div>
                 </div>
+            </div>
+            <div id="dynmap" class="tab-pane fade" role="tabpanel" aria-labelledby="dynmap-tab">
+                <script src="./dynmap.js"></script>
+                <iframe id="dynmap_iframe" src="https://dynmap.nagy.lol/" width="100%">
+                    <p>Your browser does not support iframes.</p>
+                </iframe>
             </div>
         </div>
     </div>
