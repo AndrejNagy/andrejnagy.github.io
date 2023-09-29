@@ -9,8 +9,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script></head>
+    <link rel="stylesheet" href="stylesheet.css">
 
-<body style="margin-top: 10px">
+</head>
+
+<body id="body" style="margin-top: 10px, ">
     <div class="container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -26,6 +29,33 @@
                 <button class="nav-link" id="dynmap-tab" data-bs-toggle="tab" data-bs-target="#dynmap" type="button" role="tab" aria-controls="dynmap" aria-selected="false">Dynmap</button>
             </li>
         </ul>
+        <script>
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.getElementById("body").classList.add("dark-theme");
+                // add dark-theme class to every element with class nav-link
+                var navLinks = document.getElementsByClassName("nav-link");
+                for (var i = 0; i < navLinks.length; i++) {
+                    navLinks[i].classList.add("dark-theme");
+                }
+                console.log(navLinks);
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                const newColorScheme = event.matches ? "dark" : "light";
+                if (newColorScheme == "dark") {
+                    document.getElementById("body").classList.add("dark-theme");
+                    var navLinks = document.getElementsByClassName("nav-link");
+                    for (var i = 0; i < navLinks.length; i++) {
+                        navLinks[i].classList.add("dark-theme");
+                    }
+                } else {
+                    document.getElementById("body").classList.remove("dark-theme");
+                    var navLinks = document.getElementsByClassName("nav-link");
+                    for (var i = 0; i < navLinks.length; i++) {
+                        navLinks[i].classList.remove("dark-theme");
+                    }
+                }
+            });
+        </script>
         <div class="tab-content" id="myTabContent">
             <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
                 <br/>
