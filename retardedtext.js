@@ -21,7 +21,6 @@ jQuery(document).ready(function(){
     $this.data('y', $this.outerHeight());
     });
     $('textarea').height(window.innerHeight/3);
-    $('textarea').width(window.innerWidth-10);
     addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
     // todo: everytime something changes, find all differences and apply them to other string
     var last_change = true;
