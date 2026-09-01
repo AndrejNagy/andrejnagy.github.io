@@ -41,7 +41,7 @@
         link.href = svc.url;
         link.rel = "noopener";
         head.appendChild(link);
-        head.appendChild(el("span", "svc-badge svc-badge-" + state, LABELS[state] || "Unknown"));
+        head.appendChild(el("span", "pill pill-" + state, LABELS[state] || "Unknown"));
         row.appendChild(head);
 
         if (svc.description) { row.appendChild(el("div", "svc-desc", svc.description)); }

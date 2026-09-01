@@ -1,78 +1,71 @@
-/* The switch - the box around the slider */
+/* Toggle switch. Used by index.html (where the design tokens exist) and by the
+   standalone retardedtext.html (where they don't), so every var() carries a
+   literal fallback. */
+
 .switch {
     position: relative;
     display: inline-block;
     width: 40px;
-    height: 21px;
-  }
+    height: 22px;
+    flex: none;
+}
 
-  /* Hide default HTML checkbox */
-  .switch input {
+/* Hide default HTML checkbox */
+.switch input {
     opacity: 0;
     width: 0;
     height: 0;
-  }
+}
 
-  /* The slider */
-  .slider {
+.slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
+    inset: 0;
+    background-color: var(--surface-2, #ccc);
+    border: 1px solid var(--border, #bbb);
+    transition: background-color .25s, border-color .25s;
+}
 
-  .slider:before {
+.slider:before {
     position: absolute;
     content: "";
-    height:17px;
-    width: 17px;
-    left: 3px;
+    height: 16px;
+    width: 16px;
+    left: 2px;
     bottom: 2px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
+    background-color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+    transition: transform .25s;
+}
 
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
+input:checked + .slider {
+    background-color: var(--accent, #1db954);
+    border-color: var(--accent, #1db954);
+}
 
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
+input:focus-visible + .slider {
+    outline: 2px solid var(--accent-hi, #15833d);
+    outline-offset: 2px;
+}
 
-  input:checked + .slider:before {
-    -webkit-transform: translateX(17px);
-    -ms-transform: translateX(17px);
-    transform: translateX(17px);
-  }
+input:checked + .slider:before {
+    transform: translateX(18px);
+}
 
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 21px;
-  }
+/* Rounded sliders */
+.slider.round { border-radius: 999px; }
+.slider.round:before { border-radius: 50%; }
 
-  .slider.round:before {
-    border-radius: 50%;
-  }
-
-  .f, .f span {
-    display: block;
-  }
-  .f {
-    font-size: 120%;
-    display: flex;
-    cursor: pointer;
+/* Switch + label pairing */
+.f {
+    display: inline-flex;
     align-items: center;
-    margin: auto;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-  }
+}
 
-  .non-editable {
-    background-color: rgb(134, 134, 134);
-  }
+.non-editable {
+    background-color: var(--surface-2, rgb(134, 134, 134));
+}

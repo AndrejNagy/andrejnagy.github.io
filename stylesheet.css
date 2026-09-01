@@ -1,96 +1,308 @@
-/* Nav-tabs underline and active tab border for dark mode */
-.dark-theme .nav-tabs {
-    border-bottom: 1px solid #666;
-}
-.dark-theme .nav-tabs .nav-link {
-    color: #ccc;
-    border: 1px solid transparent;
-    background: none;
-}
-.dark-theme .nav-tabs .nav-link.active {
-    color: #fff;
-    background-color: #333;
-    border-color: #666 #666 #333;
-    border-bottom: 1px solid #333;
-    z-index: 2;
-}
-.dark-theme .nav-tabs .nav-link:not(.active) {
-    border-bottom: 1px solid #666;
-}
-.dark-theme {
-    background-color: #333!important;
-    color: #f5f5f5!important;
-}
-.nav-link {
-    color:#333;
+/* ==========================================================================
+   nagy.lol
+
+   Both colour modes are driven by a single data-bs-theme attribute on <html>.
+   Bootstrap 5.3 reads that attribute natively, so the framework's own
+   components (tabs, inputs, tooltips) stay in sync with the custom ones below
+   instead of needing to be patched one by one.
+   ========================================================================== */
+
+:root {
+    --bg:         #ffffff;
+    --surface:    #f7f8fa;
+    --surface-2:  #eef1f4;
+    --border:     #e2e6eb;
+    --text:       #14171a;
+    --text-dim:   #5b6570;
+
+    --accent:     #1a9e4b;
+    --accent-hi:  #15833d;
+    --on-accent:  #ffffff;
+
+    --up:         #1a9e4b;
+    --down:       #d64045;
+    --warn:       #c98a00;
+
+    --radius:     14px;
+    --radius-sm:  9px;
+    --shadow:     0 1px 2px rgba(16, 24, 40, .04), 0 4px 16px rgba(16, 24, 40, .06);
 }
 
-/* Keep the retarded-text areas inside their container, even after a manual
-   drag-resize or a stale inline pixel width. */
-textarea {
-    max-width: 100%;
-    box-sizing: border-box;
+[data-bs-theme="dark"] {
+    --bg:         #121212;
+    --surface:    #181818;
+    --surface-2:  #242424;
+    --border:     #2b2b2b;
+    --text:       #f2f2f2;
+    --text-dim:   #a7a7a7;
+
+    --accent:     #1db954;
+    --accent-hi:  #1ed760;
+    --on-accent:  #08130c;
+
+    --up:         #1db954;
+    --down:       #f0575c;
+    --warn:       #f5a524;
+
+    --shadow:     0 1px 2px rgba(0, 0, 0, .3), 0 4px 20px rgba(0, 0, 0, .35);
 }
 
-/* --- Service / Minecraft status cards ------------------------------------ */
-.svc-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 12px;
-}
-.svc-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 12px 14px;
-}
-.dark-theme .svc-card { border-color: #555; }
+/* --- base ---------------------------------------------------------------- */
 
-.svc-head {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 48px;
+}
+
+.container { max-width: 1080px; margin-inline: auto; padding-inline: 16px; }
+
+h1, h2, h3, h4 { letter-spacing: -.02em; font-weight: 650; }
+h1 { font-size: clamp(30px, 5vw, 42px); margin: 0 0 4px; }
+h2 { font-size: 22px; }
+h3 { font-size: 17px; }
+h4 { font-size: 14px; text-transform: uppercase; letter-spacing: .07em;
+     color: var(--text-dim); font-weight: 600; margin: 0 0 10px; }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hi); text-decoration: underline; }
+
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: .92em;
+    background: var(--surface-2);
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.site-head { padding: 28px 0 18px; }
+.site-head .tagline { color: var(--text-dim); margin: 0; }
+
+/* --- tab bar ------------------------------------------------------------- */
+
+.nav-tabs {
+    border: 0;
+    gap: 6px;
+    padding: 6px;
+    background: var(--surface);
+    border-radius: 999px;
+    display: inline-flex;
     flex-wrap: wrap;
 }
-.svc-name { font-weight: 600; text-decoration: none; }
-.dark-theme .svc-name { color: #9ec5fe; }
-
-.svc-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    display: inline-block;
-    flex: none;
-    background: #adb5bd;
-}
-.svc-up       { background: #2ea043; }
-.svc-down     { background: #d93526; }
-.svc-degraded { background: #d99e00; }
-.svc-unknown  { background: #adb5bd; }
-
-.svc-badge {
-    font-size: 11px;
-    line-height: 1;
-    padding: 4px 8px;
+.nav-tabs .nav-link {
+    border: 0;
     border-radius: 999px;
-    margin-left: auto;
+    padding: 7px 16px;
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--text-dim);
+    background: transparent;
+    transition: background .15s, color .15s;
 }
-.svc-badge-up       { background: #d5f0dc; color: #10401f; }
-.svc-badge-down     { background: #fadbd8; color: #58110b; }
-.svc-badge-degraded { background: #fcefc7; color: #4d3800; }
-.svc-badge-unknown  { background: #e6e6e6; color: #333; }
+.nav-tabs .nav-link:hover { color: var(--text); background: var(--surface-2); }
+.nav-tabs .nav-link.active {
+    color: var(--on-accent);
+    background: var(--accent);
+}
 
-.svc-desc { font-size: 13px; margin-top: 6px; }
-.svc-meta { font-size: 12px; opacity: .75; margin-top: 4px; }
-.svc-foot { font-size: 12px; opacity: .6; margin-top: 12px; }
+/* --- panels -------------------------------------------------------------- */
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    height: 100%;
+}
+.panel + .panel { margin-top: 16px; }
+
+.stack { display: flex; flex-direction: column; gap: 16px; }
+
+/* key/value rows, replacing the old <br>-separated blocks */
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 14.5px; }
+.kv dt { color: var(--text-dim); font-weight: 500; }
+.kv dd { margin: 0; word-break: break-word; }
+.kv-note { color: var(--text-dim); font-size: 13.5px; margin: 12px 0 0; }
+
+.addr { font-size: 14.5px; line-height: 1.65; margin: 0 0 14px; }
+
+/* --- buttons ------------------------------------------------------------- */
+
+.btn-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 0;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--accent);
+    color: var(--on-accent);
+    cursor: pointer;
+    transition: background .15s, transform .08s;
+}
+.btn-accent:hover { background: var(--accent-hi); color: var(--on-accent); }
+.btn-accent:active { transform: scale(.97); }
+.btn-accent:focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 2px; }
+.btn-accent.btn-sm { padding: 6px 13px; font-size: 13px; }
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+}
+.btn-ghost:hover { background: var(--surface-2); color: var(--text); }
+
+/* --- media card (Minecraft), tuned to sit next to the Spotify embed ------- */
+
+.media-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+}
+.media-art {
+    width: 72px;
+    height: 72px;
+    flex: none;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--surface-2);
+    display: block;
+}
+.media-art img, .media-art svg { width: 100%; height: 100%; display: block; }
+
+.media-body { min-width: 0; flex: 1; }
+.media-top { display: flex; align-items: center; gap: 8px; }
+.media-title {
+    font-weight: 650;
+    font-size: 15.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.media-sub {
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin-top: 3px;
+    overflow-wrap: anywhere;
+}
+.media-meta { color: var(--text-dim); font-size: 12.5px; margin-top: 6px; }
+.media-actions { margin-top: 11px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* --- status pills and dots ----------------------------------------------- */
+
+.pill {
+    margin-left: auto;
+    flex: none;
+    font-size: 11px;
+    font-weight: 650;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.pill-up       { color: var(--up);   border-color: color-mix(in srgb, var(--up) 40%, transparent);
+                 background: color-mix(in srgb, var(--up) 12%, transparent); }
+.pill-down     { color: var(--down); border-color: color-mix(in srgb, var(--down) 40%, transparent);
+                 background: color-mix(in srgb, var(--down) 12%, transparent); }
+.pill-degraded { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+                 background: color-mix(in srgb, var(--warn) 12%, transparent); }
+.pill-unknown  { color: var(--text-dim); border-color: var(--border); background: var(--surface-2); }
+
+.svc-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; display: inline-block;
+           background: var(--text-dim); }
+.svc-up { background: var(--up); }
+.svc-down { background: var(--down); }
+.svc-degraded { background: var(--warn); }
+.svc-unknown { background: var(--text-dim); }
+
+/* --- services grid ------------------------------------------------------- */
+
+.svc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 14px;
+}
+.svc-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
+}
+.svc-head { display: flex; align-items: center; gap: 9px; }
+.svc-name { font-weight: 650; font-size: 15px; color: var(--text); }
+.svc-name:hover { color: var(--accent); text-decoration: none; }
+.svc-desc { font-size: 13.5px; color: var(--text-dim); margin-top: 8px; }
+.svc-meta { font-size: 12.5px; color: var(--text-dim); margin-top: 6px;
+            font-variant-numeric: tabular-nums; }
+.svc-foot { font-size: 12.5px; color: var(--text-dim); margin-top: 16px; }
+
+/* --- MOTD ---------------------------------------------------------------- */
 
 .mc-motd {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 13px;
-    margin: 8px 0 4px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    background: #f1f3f5;
+    font-size: 12.5px;
+    margin: 0;
+    color: var(--text-dim);
     white-space: pre-wrap;
-    word-break: break-word;
+    overflow-wrap: anywhere;
 }
-.dark-theme .mc-motd { background: #2b2b2b; }
+
+/* --- retarded text ------------------------------------------------------- */
+
+textarea { max-width: 100%; box-sizing: border-box; }
+
+.rt-area {
+    width: 100%;
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 15px;
+    line-height: 1.55;
+    resize: vertical;
+}
+.rt-area:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.rt-area[readonly] { background: var(--surface-2); color: var(--text-dim); }
+.rt-label { font-size: 12.5px; color: var(--text-dim); margin-bottom: 6px; display: block; }
+.rt-area + .rt-label { margin-top: 18px; }
+.rt-toolbar { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 18px; }
+
+/* --- video grid ---------------------------------------------------------- */
+
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.video-grid iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border: 0;
+    border-radius: var(--radius);
+    display: block;
+}
+
+#dynmap_iframe { border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* --- misc ---------------------------------------------------------------- */
+
+.app-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 550; }
+.app-link img { width: 20px; height: 20px; border-radius: 4px; }

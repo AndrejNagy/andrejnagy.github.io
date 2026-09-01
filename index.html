@@ -1,21 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
     <title>Nagy</title>
     <link rel="icon" type="image/x-icon" href="icon.png">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script></head>
-    <link rel="stylesheet" href="stylesheet.css">
 
+    <!-- Set the colour mode before first paint so the page never flashes white
+         on a dark-mode device. Bootstrap 5.3 themes itself off this attribute. -->
+    <script>
+        (function () {
+            var mq = window.matchMedia('(prefers-color-scheme: dark)');
+            function apply(isDark) {
+                document.documentElement.setAttribute('data-bs-theme', isDark ? 'dark' : 'light');
+            }
+            apply(mq.matches);
+            mq.addEventListener('change', function (e) { apply(e.matches); });
+        }());
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="switch.css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 
-<body id="body" style="margin-top: 10px, ">
+<body>
     <div class="container">
+
+        <header class="site-head">
+            <h1>Andrej Nagy</h1>
+        </header>
+
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
@@ -33,156 +52,156 @@
                 <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#services" type="button" role="tab" aria-controls="services" aria-selected="false">Services</button>
             </li>
         </ul>
-        <script>
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.getElementById("body").classList.add("dark-theme");
-                // add dark-theme class to every element with class nav-link
-                var navLinks = document.getElementsByClassName("nav-link");
-                for (var i = 0; i < navLinks.length; i++) {
-                    navLinks[i].classList.add("dark-theme");
-                }
-                console.log(navLinks);
-            }
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-                const newColorScheme = event.matches ? "dark" : "light";
-                if (newColorScheme == "dark") {
-                    document.getElementById("body").classList.add("dark-theme");
-                    var navLinks = document.getElementsByClassName("nav-link");
-                    for (var i = 0; i < navLinks.length; i++) {
-                        navLinks[i].classList.add("dark-theme");
-                    }
-                } else {
-                    document.getElementById("body").classList.remove("dark-theme");
-                    var navLinks = document.getElementsByClassName("nav-link");
-                    for (var i = 0; i < navLinks.length; i++) {
-                        navLinks[i].classList.remove("dark-theme");
-                    }
-                }
-            });
-        </script>
-        <div class="tab-content" id="myTabContent">
+
+        <div class="tab-content pt-4" id="myTabContent">
+
+            <!-- ---------------------------------------------------------- Home -->
             <div id="home" class="tab-pane fade show active" role="tabpanel" aria-labelledby="home-tab">
-                <br/>
-                <h1>Andrej Nagy</h1>
-                <div class="row">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <h3>Fakturačné údaje</h3>
-
-                        <p>
-
-                            Pestovateľská 4317/11
-                            <br>
-                            821 04 Bratislava-Ružinov
-                            <br>
-                            Slovenská republika
-                            <br><br>
-                            IČO: 53871022
-                            <br>
-                            DIČ: 1081244527
-                            <br>
-                            Nie je platiteľ DPH.
-                            <br>
-                            Zapísaný v Živnostenskom registri Okresného úradu Bratislava, číslo živnostenského registra: 110-301429
-                            <br>
-                            <a href="https://finstat.sk/53871022">https://finstat.sk/53871022</a><br>
-                        </p>
+                        <div class="panel">
+                            <h4>Fakturačné údaje</h4>
+                            <p class="addr">
+                                Pestovateľská 4317/11<br>
+                                821 04 Bratislava-Ružinov<br>
+                                Slovenská republika
+                            </p>
+                            <dl class="kv">
+                                <dt>IČO</dt><dd>53871022</dd>
+                                <dt>DIČ</dt><dd>1081244527</dd>
+                            </dl>
+                            <p class="kv-note">
+                                Nie je platiteľ DPH.<br>
+                                Zapísaný v Živnostenskom registri Okresného úradu Bratislava,
+                                číslo živnostenského registra: 110-301429<br>
+                                <a href="https://finstat.sk/53871022">finstat.sk/53871022</a>
+                            </p>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <h3>Kontakt</h3>
-                            <p>
-                                Telefón: <a href="tel:+421944059626">+421944059626</a><br>
-                                E-mail: <a href="mailto:andrej.nagy00@gmail.com">andrej.nagy00@gmail.com</a><br>
-                                LinkedIn: <a href="https://www.linkedin.com/in/andrej-nagy-6096051b5/">@AndrejNagy</a><br>
-                                Gitlab: <a href="https://gitlab.com/AndrejNagy">@AndrejNagy</a><br>
-                                Github: <a href="https://github.com/AndrejNagy">@AndrejNagy</a><br>
-                            </p>
 
-                        <h3>Banka</h3>
-                            <p>
-                                SWIFT: TATRSKBX<br>
-                                IBAN: SK51 1100 0000 0029 3208 5322<br>
-                            </p>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div id="retarded_text" class="tab-pane fade" role="tabpanel" aria-labelledby="retarded_text-tab">
-                <script src="./retardedtext.js"></script>
-                <br/>
-                <div>
-                    <textarea class="form-control" rows="10" style="width:100%" onchange="generateRetardedText();" type="text" id="retarded_input"></textarea><br />
-                    <textarea class="form-control" rows="10" style="width:100%" readonly id="retarded_output"></textarea>
-                </div>
-                <div>
-                    <button style="margin: 3px;" class="btn btn-primary" onclick="copyToClipboard()">Copy to clipboard</button>
-                    <div style="margin: 3px;"><label class="f">
-                        <label class="switch">
-                        <input id="case_change" name="case_change" type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>Random case</label></div>
-                    <div style="margin: 3px;"><label class="f">
-                        <label class="switch">
-                        <input id="wrong_y_i" name="wrong_y_i" type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>Wrong y/i</label></div>
-                </div>
-            </div>
-            <div id="free_time" class="tab-pane fade" role="tabpanel" aria-labelledby="free_time-tab">
-                <br/>
-                <div class="row">
                     <div class="col-md-6">
-                        <h3>Contact</h3>
-                            <p>
-                                Steam: <a href="https://steamcommunity.com/id/andrej_nagy/">@andrej_nagy</a><br>
-                                E-mail: <a href="https://www.instagram.com/andrej_nagy/">@andrej_nagy</a><br>
-                                Instagram: <a href="https://www.linkedin.com/in/andrej-nagy-6096051b5/">@andrej_nagy</a><br>
-                                Facebook: <a href="https://www.facebook.com/andrej.nagy.33/">@AndrejNagy</a><br>
-                            </p>
-                        <br>
-                        <h4>Self-Hosted apps:</h4>
-                        <p>
-                            <a href="https://earthwalker.nagy.lol">EarthWalker</a><img src="./geoguessr.png" style="width: 20px; height: 20px; margin-left: 5px; margin-bottom: 5px;"/>
-                        </p>
-
-                        <h4>Minecraft server</h4>
-                        <div class="svc-card" id="mc_status">
-                            <div class="svc-head">
-                                <span class="svc-dot svc-unknown"></span>
-                                <strong>Checking&hellip;</strong>
+                        <div class="stack">
+                            <div class="panel">
+                                <h4>Kontakt</h4>
+                                <dl class="kv">
+                                    <dt>Telefón</dt><dd><a href="tel:+421944059626">+421 944 059 626</a></dd>
+                                    <dt>E-mail</dt><dd><a href="mailto:andrej.nagy00@gmail.com">andrej.nagy00@gmail.com</a></dd>
+                                    <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/andrej-nagy-6096051b5/">@AndrejNagy</a></dd>
+                                    <dt>Gitlab</dt><dd><a href="https://gitlab.com/AndrejNagy">@AndrejNagy</a></dd>
+                                    <dt>Github</dt><dd><a href="https://github.com/AndrejNagy">@AndrejNagy</a></dd>
+                                </dl>
+                            </div>
+                            <div class="panel">
+                                <h4>Banka</h4>
+                                <dl class="kv">
+                                    <dt>SWIFT</dt><dd><code>TATRSKBX</code></dd>
+                                    <dt>IBAN</dt><dd><code>SK51 1100 0000 0029 3208 5322</code></dd>
+                                </dl>
                             </div>
                         </div>
-                        <script src="./minecraft.js"></script>
-                        <br>
                     </div>
+                </div>
+            </div>
+
+            <!-- --------------------------------------------------- Retarded text -->
+            <div id="retarded_text" class="tab-pane fade" role="tabpanel" aria-labelledby="retarded_text-tab">
+                <div class="panel">
+                    <label class="rt-label" for="retarded_input">Input</label>
+                    <textarea class="rt-area" rows="8" onchange="generateRetardedText();" type="text" id="retarded_input"></textarea>
+
+                    <label class="rt-label" for="retarded_output">Output</label>
+                    <textarea class="rt-area" rows="8" readonly id="retarded_output"></textarea>
+
+                    <div class="rt-toolbar">
+                        <button class="btn-accent" onclick="copyToClipboard()">Copy to clipboard</button>
+                        <label class="f">
+                            <span class="switch">
+                                <input id="case_change" name="case_change" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </span>
+                            Random case
+                        </label>
+                        <label class="f">
+                            <span class="switch">
+                                <input id="wrong_y_i" name="wrong_y_i" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </span>
+                            Wrong y/i
+                        </label>
+                    </div>
+                </div>
+                <script src="./retardedtext.js"></script>
+            </div>
+
+            <!-- ----------------------------------------------------- Free time -->
+            <div id="free_time" class="tab-pane fade" role="tabpanel" aria-labelledby="free_time-tab">
+                <div class="row g-3">
                     <div class="col-md-6">
-                        <h3>My recently liked songs</h3>
+                        <div class="stack">
+                            <div class="panel">
+                                <h4>Contact</h4>
+                                <dl class="kv">
+                                    <dt>Steam</dt><dd><a href="https://steamcommunity.com/id/andrej_nagy/">@andrej_nagy</a></dd>
+                                    <dt>E-mail</dt><dd><a href="https://www.instagram.com/andrej_nagy/">@andrej_nagy</a></dd>
+                                    <dt>Instagram</dt><dd><a href="https://www.linkedin.com/in/andrej-nagy-6096051b5/">@andrej_nagy</a></dd>
+                                    <dt>Facebook</dt><dd><a href="https://www.facebook.com/andrej.nagy.33/">@AndrejNagy</a></dd>
+                                </dl>
+                            </div>
+
+                            <div class="panel">
+                                <h4>Self-hosted apps</h4>
+                                <a class="app-link" href="https://earthwalker.nagy.lol">
+                                    <img src="./geoguessr.png" alt="">EarthWalker
+                                </a>
+                            </div>
+
+                            <div>
+                                <h4>Minecraft server</h4>
+                                <div class="media-card" id="mc_status">
+                                    <span class="media-art"></span>
+                                    <div class="media-body">
+                                        <div class="media-top">
+                                            <span class="media-title">minecraft.nagy.lol</span>
+                                            <span class="pill pill-unknown">Checking</span>
+                                        </div>
+                                        <div class="media-sub">Loading server status&hellip;</div>
+                                    </div>
+                                </div>
+                                <script src="./minecraft.js"></script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h4>My recently liked songs</h4>
                         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5kun17TdcG6G76fye4jCYn?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
                     </div>
                 </div>
-                <div class="row">
-                    <h2>My clutches in Counter Strike:</h2>
-                    <iframe width="1903" height="754" src="https://www.youtube.com/embed/67V2QWRQ1qY" title="CSGO 1v5 AWP clutch 3.7.2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    <iframe width="1903" height="754" src="https://www.youtube.com/embed/7rvMKJpu3O4" title="Counter Strike Global Offensive 2023 06 19 - Clutch 1v5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
+                <h4 class="mt-4">My clutches in Counter Strike</h4>
+                <div class="video-grid">
+                    <iframe src="https://www.youtube.com/embed/67V2QWRQ1qY" title="CSGO 1v5 AWP clutch 3.7.2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/7rvMKJpu3O4" title="Counter Strike Global Offensive 2023 06 19 - Clutch 1v5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
 
+            <!-- -------------------------------------------------------- Dynmap -->
             <div id="dynmap" class="tab-pane fade" role="tabpanel" aria-labelledby="dynmap-tab">
-                <br/>
                 <iframe id="dynmap_iframe" src="https://dynmap.nagy.lol/" width="100%">
                     <p>Your browser does not support iframes.</p>
                 </iframe>
                 <script src="./dynmap.js"></script>
             </div>
 
+            <!-- ------------------------------------------------------ Services -->
             <div id="services" class="tab-pane fade" role="tabpanel" aria-labelledby="services-tab">
-                <br/>
-                <h3>Self-hosted services</h3>
+                <h4>Self-hosted services</h4>
                 <div id="services_status">
                     <div class="svc-meta">Loading status&hellip;</div>
                 </div>
                 <script src="./services.js"></script>
             </div>
+
         </div>
     </div>
 </body>

@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
     <title>404 – Nagy</title>
     <link rel="icon" type="image/x-icon" href="/icon.png">
     <style>
-        :root { color-scheme: light dark; }
+        :root {
+            --bg: #ffffff;
+            --surface: #f7f8fa;
+            --border: #e2e6eb;
+            --text: #14171a;
+            --text-dim: #5b6570;
+            --accent: #1a9e4b;
+            --accent-hi: #15833d;
+            --on-accent: #ffffff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --surface: #181818;
+                --border: #2b2b2b;
+                --text: #f2f2f2;
+                --text-dim: #a7a7a7;
+                --accent: #1db954;
+                --accent-hi: #1ed760;
+                --on-accent: #08130c;
+            }
+        }
+        * { box-sizing: border-box; }
         body {
             margin: 0;
             min-height: 100vh;
@@ -16,41 +38,52 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            padding: 32px 20px;
             text-align: center;
             font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-            background: #fff;
-            color: #212529;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
         }
-        h1 { font-size: clamp(64px, 18vw, 160px); margin: 0; line-height: 1; letter-spacing: -.04em; }
-        p  { margin: 0; font-size: 18px; opacity: .8; }
-        img {
-            max-width: min(90vw, 520px);
-            height: auto;
-            margin: 20px 0;
-            border-radius: 12px;
+        h1 {
+            font-size: clamp(72px, 20vw, 168px);
+            margin: 0;
+            line-height: .9;
+            letter-spacing: -.05em;
+            font-weight: 700;
         }
+        p { margin: 10px 0 0; font-size: 17px; color: var(--text-dim); }
+        figure {
+            margin: 26px 0 0;
+            padding: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: min(92vw, 520px);
+        }
+        img { display: block; width: 100%; height: auto; border-radius: 9px; }
         a {
+            margin-top: 24px;
             display: inline-block;
-            margin-top: 8px;
-            padding: 10px 20px;
+            padding: 11px 22px;
             border-radius: 999px;
-            background: #0d6efd;
-            color: #fff;
+            background: var(--accent);
+            color: var(--on-accent);
             text-decoration: none;
             font-weight: 600;
+            font-size: 14px;
+            transition: background .15s;
         }
-        a:hover { background: #0b5ed7; }
-        @media (prefers-color-scheme: dark) {
-            body { background: #333; color: #f5f5f5; }
-        }
+        a:hover { background: var(--accent-hi); }
     </style>
 </head>
 
 <body>
     <h1>404</h1>
     <p>Táto stránka neexistuje.</p>
-    <img src="/triggered_nagy_high_res.gif" alt="Triggered Nagy" width="520">
+    <figure>
+        <img src="/triggered_nagy_high_res.gif" alt="Triggered Nagy">
+    </figure>
     <a href="/">Späť domov</a>
 </body>
 
