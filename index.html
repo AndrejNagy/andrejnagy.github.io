@@ -29,6 +29,9 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="dynmap-tab" data-bs-toggle="tab" data-bs-target="#dynmap" type="button" role="tab" aria-controls="dynmap" aria-selected="false">Dynmap</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#services" type="button" role="tab" aria-controls="services" aria-selected="false">Services</button>
+            </li>
         </ul>
         <script>
             if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -140,6 +143,16 @@
                         <p>
                             <a href="https://earthwalker.nagy.lol">EarthWalker</a><img src="./geoguessr.png" style="width: 20px; height: 20px; margin-left: 5px; margin-bottom: 5px;"/>
                         </p>
+
+                        <h4>Minecraft server</h4>
+                        <div class="svc-card" id="mc_status">
+                            <div class="svc-head">
+                                <span class="svc-dot svc-unknown"></span>
+                                <strong>Checking&hellip;</strong>
+                            </div>
+                        </div>
+                        <script src="./minecraft.js"></script>
+                        <br>
                     </div>
                     <div class="col-md-6">
                         <h3>My recently liked songs</h3>
@@ -160,6 +173,15 @@
                     <p>Your browser does not support iframes.</p>
                 </iframe>
                 <script src="./dynmap.js"></script>
+            </div>
+
+            <div id="services" class="tab-pane fade" role="tabpanel" aria-labelledby="services-tab">
+                <br/>
+                <h3>Self-hosted services</h3>
+                <div id="services_status">
+                    <div class="svc-meta">Loading status&hellip;</div>
+                </div>
+                <script src="./services.js"></script>
             </div>
         </div>
     </div>
