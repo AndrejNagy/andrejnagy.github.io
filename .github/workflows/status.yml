@@ -7,7 +7,11 @@ name: Service status
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    # Every 15 minutes, but deliberately NOT on :00/:15/:30/:45. GitHub's
+    # scheduler delays and outright drops queued runs under load, and the top of
+    # the hour plus the quarter marks are exactly where every other cron on the
+    # platform piles up. Offsetting to :07/:22/:37/:52 dodges the stampede.
+    - cron: '7,22,37,52 * * * *'
   workflow_dispatch:
 
 permissions:

@@ -39,12 +39,12 @@
 }
 
 input:checked + .slider {
-    background-color: var(--accent, #1db954);
-    border-color: var(--accent, #1db954);
+    background-color: var(--accent, #00a2fe);
+    border-color: var(--accent, #00a2fe);
 }
 
 input:focus-visible + .slider {
-    outline: 2px solid var(--accent-hi, #15833d);
+    outline: 2px solid var(--accent-hi, #0073b6);
     outline-offset: 2px;
 }
 
