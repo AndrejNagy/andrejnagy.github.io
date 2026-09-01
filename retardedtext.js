@@ -1,25 +1,44 @@
 jQuery(document).ready(function(){
     var $textareas = jQuery('textarea');
 
-    // store init (default) state
-    $textareas.data('x', $textareas.outerWidth());
-    $textareas.data('y', $textareas.outerHeight());
+    // jQuery 1.7 has no outerWidth/outerHeight setters, so convert the wanted
+    // outer box into the content box .width()/.height() actually write.
+    function setOuterSize($els, w, h) {
+        $els.each(function(){
+            var $el = jQuery(this);
+            $el.width(w - ($el.outerWidth() - $el.width()));
+            $el.height(h - ($el.outerHeight() - $el.height()));
+        });
+    }
+
+    function storeSize($els) {
+        $els.each(function(){
+            var $el = jQuery(this);
+            $el.data('x', $el.outerWidth());
+            $el.data('y', $el.outerHeight());
+        });
+    }
 
     $textareas.mousemove(function(){
         var $this = jQuery(this);
-        if (  $this.outerWidth()  != $this.data('x')
-            || $this.outerHeight() != $this.data('y') )
-        {
-            // Resize Action Here
-            $('textarea').height($this.outerHeight());
-            $('textarea').width($this.outerWidth());
+        var w = $this.outerWidth();
+        var h = $this.outerHeight();
+        if (w != $this.data('x') || h != $this.data('y')) {
+            // this one was resized by hand -> mirror its outer box onto the rest
+            setOuterSize($textareas.not(this), w, h);
         }
-        // store new height/width
-        $this.data('x', $this.outerWidth());
-        $this.data('y', $this.outerHeight());
+        // store new height/width for all of them, so the ones we just mirrored
+        // onto don't look "resized" and bounce the change back
+        storeSize($textareas);
     });
     $('textarea').height(window.innerHeight/3);
-    addEventListener('resize', (event) => {$('textarea').width(window.innerWidth-10);});
+    addEventListener('resize', (event) => {
+        $('textarea').width(window.innerWidth-10);
+        storeSize($textareas);
+    });
+
+    // store init (default) state, after the initial sizing above
+    storeSize($textareas);
 
     // --- Git-like diff logic for retarded text ---
     var retarded_input = document.getElementById("retarded_input");
