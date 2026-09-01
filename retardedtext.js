@@ -14,6 +14,9 @@ jQuery(document).ready(function(){
     function storeSize($els) {
         $els.each(function(){
             var $el = jQuery(this);
+            // A textarea in an inactive tab measures 0x0; keep its last known
+            // good baseline instead of recording the collapsed size.
+            if (!$el.outerWidth()) { return; }
             $el.data('x', $el.outerWidth());
             $el.data('y', $el.outerHeight());
         });
@@ -23,6 +26,12 @@ jQuery(document).ready(function(){
         var $this = jQuery(this);
         var w = $this.outerWidth();
         var h = $this.outerHeight();
+        if (!$this.data('x')) {
+            // first time we can actually measure it (tab just became visible),
+            // so this is the baseline, not a resize
+            storeSize($textareas);
+            return;
+        }
         if (w != $this.data('x') || h != $this.data('y')) {
             // this one was resized by hand -> mirror its outer box onto the rest
             setOuterSize($textareas.not(this), w, h);
@@ -32,8 +41,11 @@ jQuery(document).ready(function(){
         storeSize($textareas);
     });
     $('textarea').height(window.innerHeight/3);
+    // Don't force a pixel width here: the textareas are sized by CSS (100%/90%
+    // of their container). Stamping window.innerWidth on them blows them out of
+    // the container after anything that resizes the window - e.g. taking a
+    // YouTube embed fullscreen and coming back. Just re-baseline.
     addEventListener('resize', (event) => {
-        $('textarea').width(window.innerWidth-10);
         storeSize($textareas);
     });
 

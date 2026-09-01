@@ -24,3 +24,10 @@
 .nav-link {
     color:#333;
 }
+
+/* Keep the retarded-text areas inside their container, even after a manual
+   drag-resize or a stale inline pixel width. */
+textarea {
+    max-width: 100%;
+    box-sizing: border-box;
+}
