@@ -182,6 +182,8 @@ code {
     display: block;
 }
 .media-art img, .media-art svg { width: 100%; height: 100%; display: block; }
+/* Server icons are 64x64 pixel art; keep them crisp when scaled up. */
+.media-art img { image-rendering: pixelated; }
 
 .media-body { min-width: 0; flex: 1; }
 .media-top { display: flex; align-items: center; gap: 8px; }
@@ -254,14 +256,25 @@ code {
 
 /* --- MOTD ---------------------------------------------------------------- */
 
+/* The MOTD panel stays dark in BOTH themes on purpose: Minecraft's palette is
+   designed against the game's dark server list, and codes like §0 (black) or
+   §1 (dark blue) would be unreadable on a light background. */
 .mc-motd {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    margin: 10px 0 0;
+    padding: 9px 11px;
+    border-radius: var(--radius-sm);
+    background: #161616;
+    border: 1px solid #000;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12.5px;
-    margin: 0;
-    color: var(--text-dim);
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
+    line-height: 1.5;
 }
+.mc-line { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1em; }
+.mc-b { font-weight: 700; }
+.mc-i { font-style: italic; }
+.mc-u { text-decoration: underline; }
+.mc-s { text-decoration: line-through; }
+.mc-u.mc-s { text-decoration: underline line-through; }
 
 /* --- retarded text ------------------------------------------------------- */
 
