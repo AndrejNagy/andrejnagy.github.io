@@ -1,0 +1,81 @@
+name: Service status
+
+# Probes the self-hosted services and publishes the result as status.json on a
+# dedicated `status` branch. The branch is force-pushed as a single orphan
+# commit every run, so master's history stays clean and the status history
+# never grows without bound.
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: service-status
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe services
+        run: |
+          set -euo pipefail
+
+          # name|url|description
+          SERVICES=(
+            "Dynmap|https://dynmap.nagy.lol/|Live map of the Minecraft world"
+            "EarthWalker|https://earthwalker.nagy.lol/|Self-hosted GeoGuessr"
+            "Jellyfin|https://jellyfin.nagy.lol/|Media server"
+          )
+
+          parts=()
+          for entry in "${SERVICES[@]}"; do
+            IFS='|' read -r name url desc <<< "$entry"
+
+            out=$(curl -s -o /dev/null -w '%{http_code} %{time_total}' \
+                       -L --max-redirs 3 --max-time 20 "$url") || true
+            [ -z "${out:-}" ] && out="000 0"
+            code=${out%% *}
+            secs=${out##* }
+            ms=$(awk -v s="$secs" 'BEGIN { printf "%d", s * 1000 }')
+
+            # 000 is a curl-level failure (DNS, TLS, timeout). 52x is Cloudflare
+            # telling us it is up but our origin is not - that is still "down"
+            # for our purposes, and is exactly what a browser check would miss.
+            if   [ "$code" -ge 200 ] && [ "$code" -lt 400 ]; then state="up"
+            elif [ "$code" = "000" ];                         then state="down"
+            elif [ "$code" -ge 520 ] && [ "$code" -le 530 ];  then state="down"
+            elif [ "$code" -ge 500 ];                         then state="down"
+            else                                                   state="degraded"
+            fi
+
+            echo "$name -> $code ($state, ${ms}ms)"
+            parts+=("$(jq -n \
+              --arg name "$name" --arg url "$url" --arg description "$desc" \
+              --arg status "$state" --argjson code "$code" --argjson ms "$ms" \
+              '{name: $name, url: $url, description: $description, status: $status, code: $code, ms: $ms}')")
+          done
+
+          printf '%s\n' "${parts[@]}" \
+            | jq -s --arg checked_at "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                 '{checked_at: $checked_at, services: .}' > status.json
+          cat status.json
+
+      - name: Publish to status branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p out && mv status.json out/
+          cd out
+          git init -q -b status
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add status.json
+          git commit -q -m "service status $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push -q --force \
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" status

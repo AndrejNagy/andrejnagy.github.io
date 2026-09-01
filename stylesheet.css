@@ -31,3 +31,66 @@ textarea {
     max-width: 100%;
     box-sizing: border-box;
 }
+
+/* --- Service / Minecraft status cards ------------------------------------ */
+.svc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+}
+.svc-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.dark-theme .svc-card { border-color: #555; }
+
+.svc-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.svc-name { font-weight: 600; text-decoration: none; }
+.dark-theme .svc-name { color: #9ec5fe; }
+
+.svc-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex: none;
+    background: #adb5bd;
+}
+.svc-up       { background: #2ea043; }
+.svc-down     { background: #d93526; }
+.svc-degraded { background: #d99e00; }
+.svc-unknown  { background: #adb5bd; }
+
+.svc-badge {
+    font-size: 11px;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 999px;
+    margin-left: auto;
+}
+.svc-badge-up       { background: #d5f0dc; color: #10401f; }
+.svc-badge-down     { background: #fadbd8; color: #58110b; }
+.svc-badge-degraded { background: #fcefc7; color: #4d3800; }
+.svc-badge-unknown  { background: #e6e6e6; color: #333; }
+
+.svc-desc { font-size: 13px; margin-top: 6px; }
+.svc-meta { font-size: 12px; opacity: .75; margin-top: 4px; }
+.svc-foot { font-size: 12px; opacity: .6; margin-top: 12px; }
+
+.mc-motd {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px;
+    margin: 8px 0 4px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #f1f3f5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.dark-theme .mc-motd { background: #2b2b2b; }
