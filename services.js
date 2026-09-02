@@ -1,11 +1,22 @@
 // Self-hosted service dashboard, rendered into #services_status.
-// Reads the status.json published by .github/workflows/status.yml onto the
-// `status` branch. The probing happens in CI rather than here on purpose:
-// everything sits behind Cloudflare, so a browser-side check would get an
-// answer from Cloudflare even when the origin is dead and report "up".
+//
+// Sources are tried in order. The Cloudflare Worker is preferred because its
+// Cron Trigger actually holds a 15-minute cadence; the GitHub Actions output is
+// kept as a fallback but GitHub throttled a '*/15' cron down to roughly one run
+// every 190 minutes, so treat it as stale-but-better-than-nothing.
 (function () {
-    var STATUS_URL =
-        "https://raw.githubusercontent.com/AndrejNagy/andrejnagy.github.io/status/status.json";
+    var SOURCES = [
+        {
+            // Replace <subdomain> with your workers.dev subdomain - `wrangler
+            // deploy` prints the full URL. See worker/ in this repo.
+            url: "https://nagy-status.<subdomain>.workers.dev",
+            label: "Cloudflare Worker, every 15 minutes"
+        },
+        {
+            url: "https://raw.githubusercontent.com/AndrejNagy/andrejnagy.github.io/status/status.json",
+            label: "GitHub Actions (throttled, can lag hours)"
+        }
+    ];
 
     var LABELS = { up: "Up", down: "Down", degraded: "Degraded" };
 
@@ -20,12 +31,12 @@
         var then = Date.parse(iso);
         if (isNaN(then)) { return "unknown"; }
         var mins = Math.max(0, Math.round((Date.now() - then) / 60000));
-        if (mins < 1)  { return "just now"; }
+        if (mins < 1)   { return "just now"; }
         if (mins === 1) { return "1 minute ago"; }
-        if (mins < 60) { return mins + " minutes ago"; }
+        if (mins < 60)  { return mins + " minutes ago"; }
         var hrs = Math.round(mins / 60);
-        if (hrs === 1) { return "1 hour ago"; }
-        if (hrs < 24)  { return hrs + " hours ago"; }
+        if (hrs === 1)  { return "1 hour ago"; }
+        if (hrs < 24)   { return hrs + " hours ago"; }
         var days = Math.round(hrs / 24);
         return days === 1 ? "1 day ago" : days + " days ago";
     }
@@ -46,14 +57,14 @@
 
         if (svc.description) { row.appendChild(el("div", "svc-desc", svc.description)); }
 
-        // code 0 means curl never got a reply at all (DNS / TLS / timeout)
+        // code 0 means the probe never got a reply at all (DNS / TLS / timeout)
         var detail = svc.code ? ("HTTP " + svc.code + " \u00b7 " + svc.ms + " ms")
                               : "no response";
         row.appendChild(el("div", "svc-meta", detail));
         return row;
     }
 
-    function render(data) {
+    function render(data, source) {
         var box = document.getElementById("services_status");
         if (!box) { return; }
         box.innerHTML = "";
@@ -62,7 +73,7 @@
         (data.services || []).forEach(function (svc) { list.appendChild(card(svc)); });
         box.appendChild(list);
         box.appendChild(el("div", "svc-foot",
-            "Checked " + ago(data.checked_at) + " from GitHub Actions, every 15 minutes."));
+            "Checked " + ago(data.checked_at) + " \u00b7 " + source.label));
     }
 
     function fail(message) {
@@ -72,21 +83,31 @@
         box.appendChild(el("div", "svc-meta", message));
     }
 
-    function load() {
-        // cache-bust: raw.githubusercontent.com serves Cache-Control: max-age=300
-        fetch(STATUS_URL + "?t=" + Date.now(), { cache: "no-store" })
+    // Walk the source list until one answers with usable JSON.
+    function loadFrom(i) {
+        if (i >= SOURCES.length) {
+            fail("No status source reachable right now.");
+            return;
+        }
+        var source = SOURCES[i];
+        if (source.url.indexOf("<subdomain>") !== -1) {   // not configured yet
+            loadFrom(i + 1);
+            return;
+        }
+        fetch(source.url + (source.url.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now(),
+              { cache: "no-store" })
             .then(function (r) {
-                if (r.status === 404) {
-                    throw new Error(
-                        "No status published yet - run the 'Service status' " +
-                        "workflow once to create the status branch.");
-                }
                 if (!r.ok) { throw new Error("HTTP " + r.status); }
                 return r.json();
             })
-            .then(render)
-            .catch(function (e) { fail(e.message); });
+            .then(function (data) {
+                if (!data || !data.services) { throw new Error("unexpected payload"); }
+                render(data, source);
+            })
+            .catch(function () { loadFrom(i + 1); });
     }
+
+    function load() { loadFrom(0); }
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", load);

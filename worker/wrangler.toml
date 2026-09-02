@@ -1,0 +1,14 @@
+name = "nagy-status"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# Cloudflare honours this cadence properly, unlike GitHub Actions.
+# 96 KV writes/day against a 1000/day free-tier limit.
+[triggers]
+crons = ["*/15 * * * *"]
+
+# Fill `id` in with the value printed by:
+#   npx wrangler kv namespace create STATUS
+[[kv_namespaces]]
+binding = "STATUS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"

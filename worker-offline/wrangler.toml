@@ -1,0 +1,12 @@
+name = "nagy-offline"
+main = "src/index.js"
+compatibility_date = "2026-01-01"
+
+# One Worker fronting every self-hosted subdomain, so all of them share a
+# single error screen. Note the status Worker must NOT be routed here - it
+# fetches these same hostnames and would loop.
+routes = [
+  { pattern = "jellyfin.nagy.lol/*",    zone_name = "nagy.lol" },
+  { pattern = "dynmap.nagy.lol/*",      zone_name = "nagy.lol" },
+  { pattern = "earthwalker.nagy.lol/*", zone_name = "nagy.lol" },
+]
