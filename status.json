@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-09-05T18:02:13Z",
+  "services": [
+    {
+      "name": "Dynmap",
+      "url": "https://dynmap.nagy.lol/",
+      "description": "Live map of the Minecraft world",
+      "status": "up",
+      "code": 200,
+      "ms": 1318
+    },
+    {
+      "name": "EarthWalker",
+      "url": "https://earthwalker.nagy.lol/",
+      "description": "Self-hosted GeoGuessr",
+      "status": "up",
+      "code": 200,
+      "ms": 4997
+    },
+    {
+      "name": "Jellyfin",
+      "url": "https://jellyfin.nagy.lol/",
+      "description": "Media server",
+      "status": "up",
+      "code": 200,
+      "ms": 2934
+    }
+  ]
+}
