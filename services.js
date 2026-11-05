@@ -1,9 +1,7 @@
 // Self-hosted service dashboard, rendered into #services_status.
 //
-// Sources are tried in order. The Cloudflare Worker is preferred because its
-// Cron Trigger actually holds a 15-minute cadence; the GitHub Actions output is
-// kept as a fallback but GitHub throttled a '*/15' cron down to roughly one run
-// every 190 minutes, so treat it as stale-but-better-than-nothing.
+// Sources are tried in order. The GitHub Actions probe was removed, so the
+// Cloudflare Worker is the only source.
 (function () {
     var SOURCES = [
         {
@@ -11,10 +9,6 @@
             // deploy` prints the full URL. See worker/ in this repo.
             url: "https://nagy-status.<subdomain>.workers.dev",
             label: "Cloudflare Worker, every 15 minutes"
-        },
-        {
-            url: "https://raw.githubusercontent.com/AndrejNagy/andrejnagy.github.io/status/status.json",
-            label: "GitHub Actions (throttled, can lag hours)"
         }
     ];
 
